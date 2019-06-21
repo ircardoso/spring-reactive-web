@@ -1,0 +1,8 @@
+env:
+ mongo:
+  dbName: webflux
+  port: 27017
+
+spring:
+ main:
+  allow-bean-definition-overriding: true
