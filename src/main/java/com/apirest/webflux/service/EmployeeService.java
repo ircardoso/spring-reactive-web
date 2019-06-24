@@ -12,7 +12,7 @@ public interface EmployeeService {
 
     void create(Employee e);
 
-    Mono<Employee> findById(Integer id);
+    Mono<Employee> findById(String id);
 
     Flux<Employee> findByName(String name);
 
@@ -20,5 +20,7 @@ public interface EmployeeService {
 
     Mono<Employee> update(Employee e);
 
-    Mono<Void> delete(Integer id);
+    Mono<Void> delete(String id);
+
+    Flux<Employee> stream(String id);
 }

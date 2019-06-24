@@ -1,38 +1,36 @@
 package com.apirest.webflux.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Employee
  */
-@Scope(scopeName = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Document
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
 
     @Id
-    private ObjectId id;
+    private String id;
     private String name;
     private long salary;
 
-
-    public Employee() {
-    }
-
-    public Employee(ObjectId id, String name, long salary) {
-        this.id = id;
+    public Employee(String name, long salary) {
         this.name = name;
         this.salary = salary;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -52,7 +50,7 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Employee id(ObjectId id) {
+    public Employee id(String id) {
         this.id = id;
         return this;
     }
@@ -69,12 +67,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", name='" + getName() + "'" +
-            ", salary='" + getSalary() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", salary='" + getSalary() + "'" + "}";
     }
-    
 
 }

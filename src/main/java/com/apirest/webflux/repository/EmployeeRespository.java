@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
  * EmployeeRespository
  */
 @Repository
-public interface EmployeeRespository extends ReactiveMongoRepository<Employee, Integer> {
+public interface EmployeeRespository extends ReactiveMongoRepository<Employee, String> {
 
     // default Flux<Employee> teste() {
     //     Sort s = new Sort(Sort.Direction.DESC, "id");

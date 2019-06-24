@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,11 @@ import reactor.core.publisher.Mono;
  * EmployeeController
  */
 @RestController
+@RequestMapping(path = EmployeeController.EMPLOYEE)
 public class EmployeeController {
+
+    static final String EMPLOYEE = "/employee";
+    static final String APPLICATION_JSON = "application/json";
 
     @Autowired
     private EmployeeServiceImpl employeeService;
@@ -35,7 +40,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Mono<Employee>> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Mono<Employee>> findById(@PathVariable("id") String id) {
         Mono<Employee> e = employeeService.findById(id);
         HttpStatus status = e != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<Mono<Employee>>(e, status);
@@ -51,13 +56,18 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
+    @GetMapping(path = "/events/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Employee> eventsOfStream(@PathVariable("id") String id) {
+        return employeeService.stream(id);
+    }
+
     @PutMapping(path = "/value")
     public Mono<Employee> update(@RequestBody Employee e) {
         return employeeService.update(e);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public void delete(@PathVariable("id") Integer id) {
+    public void delete(@PathVariable("id") String id) {
         employeeService.delete(id).subscribe();
     }
 }
